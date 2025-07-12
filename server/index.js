@@ -19,6 +19,10 @@ app.use(
   })
 );
 
+
+// Explicitly handle OPTIONS preflight request (optional but helpful)
+app.options("*", cors());
+
 app.use(cookieParser());
 app.use(express.json());
 
