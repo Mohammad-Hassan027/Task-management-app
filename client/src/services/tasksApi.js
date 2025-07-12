@@ -3,7 +3,7 @@ import axios from "axios";
 export const callGetAllTasks = async (getcurrentId) => {
   try {
     const apiResponse = await axios.get(
-      `http://localhost:5000/api/task/get-all-task/${getcurrentId}`,
+      `https://task-management-app-1krw.onrender.com/api/task/get-all-task/${getcurrentId}`,
       { withCredentials: true }
     );
     return apiResponse?.data;
@@ -14,7 +14,7 @@ export const callGetAllTasks = async (getcurrentId) => {
 
 export const callAddNewTask = async (formData) => {
   const apiResponse = await axios.post(
-    "http://localhost:5000/api/task/add-new-task",
+    "https://task-management-app-1krw.onrender.com/api/task/add-new-task",
     formData
   );
 
@@ -23,7 +23,7 @@ export const callAddNewTask = async (formData) => {
 
 export const callupdateTask = async (formData) => {
   const apiResponse = await axios.put(
-    "http://localhost:5000/api/task/update-task",
+    "https://task-management-app-1krw.onrender.com/api/task/update-task",
     formData
   );
 
@@ -32,7 +32,7 @@ export const callupdateTask = async (formData) => {
 
 export const callDeleteTask = async (getcurrentId) => {
   const apiResponse = await axios.delete(
-    `http://localhost:5000/api/task/delete-task/${getcurrentId}`
+    `https://task-management-app-1krw.onrender.com/api/task/delete-task/${getcurrentId}`
   );
 
   return apiResponse?.data;

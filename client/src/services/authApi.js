@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const callRegisterUserApi = async (formData) => {
   const apiResponse = await axios.post(
-    "http://localhost:5000/api/user/register",
+    "https://task-management-app-1krw.onrender.com/api/user/register",
     formData,
     { withCredentials: true }
   );
@@ -12,7 +12,7 @@ export const callRegisterUserApi = async (formData) => {
 
 export const callLoginUserApi = async (formData) => {
   const apiResponse = await axios.post(
-    "http://localhost:5000/api/user/login",
+    "https://task-management-app-1krw.onrender.com/api/user/login",
     formData,
     { withCredentials: true }
   );
@@ -22,7 +22,7 @@ export const callLoginUserApi = async (formData) => {
 
 export const callLogoutUserApi = async () => {
   const apiResponse = await axios.post(
-    "http://localhost:5000/api/user/logout",
+    "https://task-management-app-1krw.onrender.com/api/user/logout",
     {},
     { withCredentials: true }
   );
@@ -32,7 +32,7 @@ export const callLogoutUserApi = async () => {
 
 export const callAuthUserApi = async () => {
   const apiResponse = await axios.post(
-    "http://localhost:5000/api/user/auth",
+    "https://task-management-app-1krw.onrender.com/api/user/auth",
     {},
     { withCredentials: true }
   );
