@@ -45,6 +45,7 @@ function TaskManagerProvider({ children }) {
             )
           : navigate("/auth");
       } catch (error) {
+        console.log(error);
         navigate("/auth");
       } finally {
         setIsLoading(false); // Set loading false when done
@@ -60,7 +61,7 @@ function TaskManagerProvider({ children }) {
     ) {
       fetchAllTasks();
     }
-  }, [user]);
+  }, [user, location.pathname]);
 
   if (isLoading) {
     return <div>Loading...</div>; // Or your loading component
