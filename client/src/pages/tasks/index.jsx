@@ -52,7 +52,7 @@ function TasksPage() {
       fetchAllTasks();
     }
   }, [user]);
-
+  console.log("TasksPage rendered, tasks:", tasksList);
   return (
     <Fragment>
       <div className="px-4 py-6 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 max-w-lvw">

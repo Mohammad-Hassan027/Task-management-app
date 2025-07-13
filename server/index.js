@@ -14,11 +14,20 @@ ConnectDb();
 app.use(
   cors({
     origin: [
+      "https://task-management-app-1krw.onrender.com",
       "https://task-management-app-1-lzhj.onrender.com",
       "http://localhost:5173",
+      "http://localhost:5000",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Origin",
+      "X-Requested-With",
+      "Accept",
+    ],
   })
 );
 
