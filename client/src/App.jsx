@@ -8,15 +8,15 @@ import CommomLayout from "./components/commonLayout";
 import { TaskManagerContext } from "./context/task-manager-context";
 
 function ProtectedRoute({ children }) {
-  const { user, isLoading } = useContext(TaskManagerContext);
+  const { isLoading } = useContext(TaskManagerContext);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
+  // if (!user) {
+  //   return <Navigate to="/auth" replace />;
+  // }
 
   return children;
 }
