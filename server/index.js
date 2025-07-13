@@ -7,21 +7,23 @@ const cookieParser = require("cookie-parser");
 const TaskRouter = require("./routes/task-routes");
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 ConnectDb();
 
 app.use(
   cors({
-    origin: ["https://task-management-app-1-lzhj.onrender.com"],
+    origin: [
+      "https://task-management-app-1-lzhj.onrender.com",
+      "http://localhost:5173",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-
-// Explicitly handle OPTIONS preflight request (optional but helpful)
-app.options("/*splat", cors());
+// Remove or fix the OPTIONS handler
+app.options("*", cors()); // Change /*splat to *
 
 app.use(cookieParser());
 app.use(express.json());

@@ -11,6 +11,7 @@ function TaskManagerProvider({ children }) {
   const [user, setUser] = useState(null);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const [tasksList, setTasksList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add this
   const taskFormData = useForm({
     defaultValues: {
       title: "",
@@ -31,17 +32,23 @@ function TaskManagerProvider({ children }) {
 
   useEffect(() => {
     async function AuthenticateUser() {
-      const data = await callAuthUserApi();
+      try {
+        setIsLoading(true); // Set loading when check starts
+        const data = await callAuthUserApi();
+        if (data?.userInfo) setUser(data?.userInfo);
 
-      if (data?.userInfo) setUser(data?.userInfo);
-
-      data?.success
-        ? navigate(
-            location.pathname === "/auth" || location.pathname === "/"
-              ? "/tasks/list"
-              : `${location.pathname}`
-          )
-        : navigate("/auth");
+        data?.success
+          ? navigate(
+              location.pathname === "/auth" || location.pathname === "/"
+                ? "/tasks/list"
+                : `${location.pathname}`
+            )
+          : navigate("/auth");
+      } catch (error) {
+        navigate("/auth");
+      } finally {
+        setIsLoading(false); // Set loading false when done
+      }
     }
     AuthenticateUser();
   }, [navigate, location.pathname]);
@@ -55,6 +62,10 @@ function TaskManagerProvider({ children }) {
     }
   }, [user]);
 
+  if (isLoading) {
+    return <div>Loading...</div>; // Or your loading component
+  }
+
   return (
     <TaskManagerContext.Provider
       value={{
@@ -66,6 +77,7 @@ function TaskManagerProvider({ children }) {
         setTasksList,
         taskFormData,
         fetchAllTasks,
+        isLoading, // Add this to context
       }}
     >
       {children}
