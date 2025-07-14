@@ -1,19 +1,11 @@
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useContext } from "react";
 import TasksPage from "./pages/tasks";
 import AuthPage from "./pages/auth";
 import ScrumBoardPage from "./pages/scrum-board";
 import CommomLayout from "./components/commonLayout";
-import { TaskManagerContext } from "./context/task-manager-context";
 
 function App() {
-  const { isLoading } = useContext(TaskManagerContext);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  
   return (
     <Routes>
       <Route path="/auth" element={<AuthPage />} />
@@ -21,7 +13,6 @@ function App() {
         <Route path="list" element={<TasksPage />} />
         <Route path="scrum-board" element={<ScrumBoardPage />} />
       </Route>
-      <Route path="*" element={<Navigate to="/auth" replace />} />
     </Routes>
   );
 }

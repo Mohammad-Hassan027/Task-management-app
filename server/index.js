@@ -14,25 +14,25 @@ ConnectDb();
 app.use(
   cors({
     origin: [
-      "https://task-management-app-1krw.onrender.com",
+      // "https://task-management-app-1krw.onrender.com",
       "https://task-management-app-1-lzhj.onrender.com",
-      "http://localhost:5173",
-      "http://localhost:5000",
+      // "http://localhost:5173",
+      // "http://localhost:5000",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Origin",
-      "X-Requested-With",
-      "Accept",
-    ],
+    // allowedHeaders: [
+    //   "Content-Type",
+    //   "Authorization",
+    //   "Origin",
+    //   "X-Requested-With",
+    //   "Accept",
+    // ],
   })
 );
 
 // Remove or fix the OPTIONS handler
-app.options("*", cors()); // Change /*splat to *
+// app.options("*", cors()); // Change /*splat to *
 
 app.use(cookieParser());
 app.use(express.json());
