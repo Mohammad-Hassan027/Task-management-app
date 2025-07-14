@@ -45,9 +45,21 @@ export const callAuthUserApi = async () => {
     const apiResponse = await axios.post(
       "https://task-management-app-1krw.onrender.com/api/user/auth",
       {},
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-    return apiResponse?.data;
+
+    if (apiResponse?.data?.userInfo) {
+      return {
+        success: true,
+        userInfo: apiResponse.data.userInfo,
+      };
+    }
+    return { success: false };
   } catch (error) {
     console.error("Auth error:", error);
     return { success: false };

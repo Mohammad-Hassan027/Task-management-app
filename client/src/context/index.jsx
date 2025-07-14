@@ -48,18 +48,24 @@ function TaskManagerProvider({ children }) {
 
         if (!mounted) return;
 
-        if (data?.userInfo) {
-          setUser(data?.userInfo);
+        if (data?.success && data?.userInfo) {
+          setUser(data.userInfo);
           // Only navigate if on auth or root
           if (location.pathname === "/auth" || location.pathname === "/") {
             navigate("/tasks/list");
           }
         } else {
-          navigate("/auth");
+          setUser(null); // Clear user if auth fails
+          if (location.pathname !== "/auth") {
+            navigate("/auth");
+          }
         }
       } catch (error) {
-        console.error(error);
-        navigate("/auth");
+        console.error("Auth error:", error);
+        setUser(null);
+        if (location.pathname !== "/auth") {
+          navigate("/auth");
+        }
       } finally {
         if (mounted) {
           setIsLoading(false);
@@ -73,7 +79,7 @@ function TaskManagerProvider({ children }) {
       mounted = false;
     };
     // Only run on mount and when navigation changes
-  }, [navigate]);
+  }, [navigate, location.pathname]); // Add location.pathname to deps
 
   useEffect(() => {
     if (!user) return; // Don't fetch if no user
