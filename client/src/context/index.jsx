@@ -51,14 +51,15 @@ function TaskManagerProvider({ children }) {
         if (data?.success && data?.userInfo) {
           setUser(data.userInfo);
           // Only navigate if on auth or root
-          if (location.pathname === "/auth" || location.pathname === "/") {
-            navigate("/tasks/list");
-          }
-        } else {
-          setUser(null); // Clear user if auth fails
-          if (location.pathname !== "/auth") {
-            navigate("/auth");
-          }
+          navigate("/tasks/list");
+          //   if (location.pathname === "/auth" || location.pathname === "/") {
+          //     navigate("/tasks/list");
+          //   }
+          // } else {
+          //   setUser(null); // Clear user if auth fails
+          //   if (location.pathname !== "/auth") {
+          //     navigate("/auth");
+          //   }
         }
       } catch (error) {
         console.error("Auth error:", error);
