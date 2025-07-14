@@ -39,40 +39,52 @@ function TaskManagerProvider({ children }) {
   }
 
   useEffect(() => {
+    let mounted = true;
+
     async function AuthenticateUser() {
       try {
         setIsLoading(true);
         const data = await callAuthUserApi();
 
+        if (!mounted) return;
+
         if (data?.userInfo) {
           setUser(data?.userInfo);
-
-          // Check if user is on auth page or root
+          // Only navigate if on auth or root
           if (location.pathname === "/auth" || location.pathname === "/") {
             navigate("/tasks/list");
           }
         } else {
-          // If no user data, redirect to auth
           navigate("/auth");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         navigate("/auth");
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     }
+
     AuthenticateUser();
-  }, [navigate, location.pathname]);
+
+    return () => {
+      mounted = false;
+    };
+    // Only run on mount and when navigation changes
+  }, [navigate]);
 
   useEffect(() => {
+    if (!user) return; // Don't fetch if no user
+
     if (
       location.pathname === "/tasks/list" ||
       location.pathname === "/tasks/scrum-board"
     ) {
       fetchAllTasks();
     }
-  }, [user, location.pathname]);
+  }, [user, location.pathname]); // Add fetchAllTasks to deps if you memoize it
 
   if (isLoading) {
     return (

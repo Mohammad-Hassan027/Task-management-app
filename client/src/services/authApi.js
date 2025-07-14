@@ -47,10 +47,9 @@ export const callAuthUserApi = async () => {
       {},
       { withCredentials: true }
     );
-
     return apiResponse?.data;
   } catch (error) {
-    console.error("Error during authentication:", error);
-    throw error;
+    console.error("Auth error:", error);
+    return { success: false };
   }
 };
