@@ -54,9 +54,10 @@ export const callAuthUserApi = async () => {
     );
 
     if (apiResponse?.data?.userInfo) {
+      console.log("User authenticated:", apiResponse?.data?.userInfo);
       return {
         success: true,
-        userInfo: apiResponse.data.userInfo,
+        userInfo: apiResponse?.data?.userInfo,
       };
     }
     return { success: false };
