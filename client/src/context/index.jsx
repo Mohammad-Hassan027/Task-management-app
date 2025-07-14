@@ -12,6 +12,7 @@ function TaskManagerProvider({ children }) {
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const [tasksList, setTasksList] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add this
+  const [error, setError] = useState(null);
   const taskFormData = useForm({
     defaultValues: {
       title: "",
@@ -21,34 +22,44 @@ function TaskManagerProvider({ children }) {
     },
   });
 
+  // In fetchAllTasks
   async function fetchAllTasks() {
-    if (user !== null) {
-      const response = await callGetAllTasks(user?._id);
-      if (response?.success) {
-        setTasksList(response?.tasksList);
+    try {
+      if (user !== null) {
+        const response = await callGetAllTasks(user?._id);
+        if (response?.success) {
+          setTasksList(response?.tasksList);
+          setError(null);
+        }
       }
+    } catch (err) {
+      setError("Failed to fetch tasks");
+      console.error(err);
     }
   }
 
   useEffect(() => {
     async function AuthenticateUser() {
       try {
-        setIsLoading(true); // Set loading when check starts
+        setIsLoading(true);
         const data = await callAuthUserApi();
-        if (data?.userInfo) setUser(data?.userInfo);
 
-        data?.success
-          ? navigate(
-              location.pathname === "/auth" || location.pathname === "/"
-                ? "/tasks/list"
-                : `${location.pathname}`
-            )
-          : navigate("/auth");
+        if (data?.userInfo) {
+          setUser(data?.userInfo);
+
+          // Check if user is on auth page or root
+          if (location.pathname === "/auth" || location.pathname === "/") {
+            navigate("/tasks/list");
+          }
+        } else {
+          // If no user data, redirect to auth
+          navigate("/auth");
+        }
       } catch (error) {
         console.log(error);
         navigate("/auth");
       } finally {
-        setIsLoading(false); // Set loading false when done
+        setIsLoading(false);
       }
     }
     AuthenticateUser();
@@ -64,7 +75,11 @@ function TaskManagerProvider({ children }) {
   }, [user, location.pathname]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Or your loading component
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   }
 
   return (
@@ -78,7 +93,8 @@ function TaskManagerProvider({ children }) {
         setTasksList,
         taskFormData,
         fetchAllTasks,
-        isLoading, // Add this to context
+        isLoading,
+        error,
       }}
     >
       {children}
