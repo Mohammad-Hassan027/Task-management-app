@@ -15,13 +15,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // server: {
-  //   proxy: {
-  //     "/api": {
-  //       target: "https://task-management-app-1krw.onrender.com", // your backend URL
-  //       changeOrigin: true,
-  //       secure: false,
-  //     },
-  //   },
-  // },
 });

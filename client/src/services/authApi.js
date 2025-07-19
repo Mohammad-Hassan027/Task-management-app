@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const callRegisterUserApi = async (formData) => {
   const apiResponse = await axios.post(
-    "https://task-management-app-1krw.onrender.com/api/user/register",
+    `${import.meta.env.VITE_BACKEND_URL}/api/user/register`,
     formData,
     { withCredentials: true }
   );
@@ -13,7 +13,7 @@ export const callRegisterUserApi = async (formData) => {
 export const callLoginUserApi = async (formData) => {
   try {
     const apiResponse = await axios.post(
-      "https://task-management-app-1krw.onrender.com/api/user/login",
+      `${import.meta.env.VITE_BACKEND_URL}/api/user/login`,
       formData,
       { withCredentials: true }
     );
@@ -28,7 +28,7 @@ export const callLoginUserApi = async (formData) => {
 export const callLogoutUserApi = async () => {
   try {
     const apiResponse = await axios.post(
-      "https://task-management-app-1krw.onrender.com/api/user/logout",
+      `${import.meta.env.VITE_BACKEND_URL}/api/user/logout`,
       {},
       { withCredentials: true }
     );
@@ -43,13 +43,10 @@ export const callLogoutUserApi = async () => {
 export const callAuthUserApi = async () => {
   try {
     const apiResponse = await axios.post(
-      "https://task-management-app-1krw.onrender.com/api/user/auth",
+      `${import.meta.env.VITE_BACKEND_URL}/api/user/auth`,
       {},
       {
         withCredentials: true,
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
       }
     );
 

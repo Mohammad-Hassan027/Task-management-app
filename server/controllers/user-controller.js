@@ -15,7 +15,7 @@ const loginUserSchema = Joi.object({
 });
 
 const generateJwtToken = (getId) => {
-  return jwt.sign({ getId }, process.env.JWT_SECRET_KET, {
+  return jwt.sign({ getId }, process.env.JWT_SECRET_KEY, {
     expiresIn: 3 * 24 * 60 * 60,
   });
 };

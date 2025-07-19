@@ -11,7 +11,7 @@ function TaskManagerProvider({ children }) {
   const [user, setUser] = useState(null);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const [tasksList, setTasksList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add this
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const taskFormData = useForm({
     defaultValues: {
@@ -49,20 +49,14 @@ function TaskManagerProvider({ children }) {
         if (!mounted) return;
 
         if (data?.success && data?.userInfo) {
-          setUser(data.userInfo);
-          // Only navigate if on auth or root
-          navigate("/tasks/list");
-          //   if (location.pathname === "/auth" || location.pathname === "/") {
-          //     navigate("/tasks/list");
-          //   }
-          // } else {
-          //   setUser(null); // Clear user if auth fails
-          //   if (location.pathname !== "/auth") {
-          //     navigate("/auth");
-          //   }
+          setUser(data?.userInfo);
+          setError(null);
+          if (location.pathname === "/auth" || location.pathname === "/") {
+            navigate("/tasks/list");
+          }
         }
       } catch (error) {
-        console.error("Auth error:", error);
+        console.log("Auth error:", error);
         setUser(null);
         if (location.pathname !== "/auth") {
           navigate("/auth");
@@ -79,8 +73,8 @@ function TaskManagerProvider({ children }) {
     return () => {
       mounted = false;
     };
-    // Only run on mount and when navigation changes
-  }, [navigate, location.pathname]); // Add location.pathname to deps
+    // // Only run on mount and when navigation changes
+  }, [navigate, location.pathname]);
 
   useEffect(() => {
     if (!user) return; // Don't fetch if no user
