@@ -12,7 +12,8 @@ function App() {
       <Route path="/tasks" element={<CommomLayout />}>
         <Route path="list" element={<TasksPage />} />
         <Route path="scrum-board" element={<ScrumBoardPage />} />
-      </Route>    
+      </Route>
+      <Route path="*" element={<Navigate to="/auth" replace />} />
     </Routes>
   );
 }
