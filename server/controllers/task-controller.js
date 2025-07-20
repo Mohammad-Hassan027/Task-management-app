@@ -5,7 +5,7 @@ const getAllTask = async (req, res) => {
   try {
     const getAllTaskById = await Task.find({ userId: id });
 
-    if (getAllTaskById) {
+    if (getAllTaskById.length > 0) {
       return res.status(200).json({
         success: true,
         tasksList: getAllTaskById,
@@ -25,7 +25,7 @@ const getAllTask = async (req, res) => {
 };
 
 const addNewTask = async (req, res) => {
-  const { title, description, status, userId, priority } = await req.body;
+  const { title, description, status, userId, priority } = req.body;
   try {
     const newlyCreatedTask = await Task.create({
       title,
@@ -36,7 +36,7 @@ const addNewTask = async (req, res) => {
     });
 
     if (newlyCreatedTask) {
-      return res.status(200).json({
+      return res.status(201).json({
         success: true,
         message: "Task added successfully",
       });
@@ -56,8 +56,7 @@ const addNewTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { title, description, status, priority, userId, _id } =
-      await req.body;
+    const { title, description, status, priority, userId, _id } = req.body;
     const updatedTask = await Task.findByIdAndUpdate(
       { _id },
       {
@@ -70,7 +69,7 @@ const updateTask = async (req, res) => {
       { new: true }
     );
 
-    if (updateTask) {
+    if (updatedTask) {
       return res.status(201).json({
         success: true,
         message: "Task updated successfully",

@@ -15,7 +15,7 @@ const loginUserSchema = Joi.object({
 });
 
 const generateJwtToken = (getId) => {
-  return jwt.sign({ getId }, process.env.JWT_SECRET_KEY, {
+  return jwt.sign({ id: getId }, process.env.JWT_SECRET_KEY, {
     expiresIn: 3 * 24 * 60 * 60,
   });
 };
@@ -37,7 +37,7 @@ const handleRegister = async (req, res) => {
     if (isExsitingUser) {
       return res.status(400).json({
         success: false,
-        message: "User email already exists ! try with diffrent email.",
+        message: "User email already exists ! try a diffrent email.",
       });
     }
 
@@ -55,10 +55,11 @@ const handleRegister = async (req, res) => {
       res.cookie("token", token, {
         withCredentials: true,
         httpOnly: false,
+        secure: true,
       });
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "User register successfully",
       userData: {
@@ -70,7 +71,7 @@ const handleRegister = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Something went worng! please try again.",
+      message: "Something went wrong!! please try again.",
     });
   }
 };
@@ -110,16 +111,17 @@ const handleLogin = async (req, res) => {
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
+      secure: true,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User Logged in successfully.",
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Something went worng! please try again.",
+      message: "Something went wrong!! please try again.",
     });
   }
 };
@@ -128,11 +130,12 @@ const handleLogOut = (req, res) => {
   res.cookie("token", "", {
     withCredentials: true,
     httpOnly: false,
+    secure: true,
   });
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
-    message: "Loggged out successfully.",
+    message: "Logged out successfully.",
   });
 };
 

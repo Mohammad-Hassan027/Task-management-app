@@ -3,32 +3,36 @@ const User = require("../models/user-model");
 
 const userAuthVerification = async (req, res) => {
   const token = req.cookies.token;
- console.log("Token",token);
+  console.log("Token", token);
+
   if (!token) {
-    return res.json({
+    return res.status(401).json({
       success: false,
-      message: "Token is not available or Invalid token",
+      message: "Token is not available or invalid.",
     });
   }
 
-  if (token) {
-    try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      const userInfo = await User.findById(decodedToken.getId);
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const userInfo = await User.findById(decodedToken.id); // Adjust 'id' as per your payload
 
-      if (userInfo) {
-        return res.status(200).json({
-          success: true,
-          userInfo:userr,
-        });
-      }
-    } catch (error) {
-      console.error("Auth error",error);
-      return res.status(401).json({
+    if (!userInfo) {
+      return res.status(404).json({
         success: false,
-        message: "Token is not available or Invalid token",
+        message: "User not found.",
       });
     }
+
+    return res.status(200).json({
+      success: true,
+      userInfo: userInfo,
+    });
+  } catch (error) {
+    console.error("Auth error", error);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token.",
+    });
   }
 };
 
