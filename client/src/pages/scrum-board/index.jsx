@@ -64,6 +64,14 @@ function ScrumBoardPage() {
     return taskByStatus;
   }
 
+  // useEffect(() => {
+  //   if (!user) return; // Don't fetch if no user
+  //   async function fetchTasks() {
+  //     await fetchAllTasks();
+  //   }
+  //   fetchTasks();
+  // }, [user]);
+
   return (
     <Fragment>
       <div className="grid grid-cols-5 gap-2 h-full w-screen">

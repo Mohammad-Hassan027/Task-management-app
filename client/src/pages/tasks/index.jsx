@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import TaskItems from "../../components/tasks/task-item";
 import AddNewTask from "./../../components/tasks/add-new-task";
 import { TaskManagerContext } from "./../../context/task-manager-context";
@@ -47,12 +47,14 @@ function TasksPage() {
     }
   }
 
-  useEffect(() => {
-    if (user !== null) {
-      fetchAllTasks();
-    }
-  }, [user]);
-  console.log("TasksPage rendered, tasks:", tasksList);
+  // useEffect(() => {
+  //   if (!user) return; // Don't fetch if no user
+  //   async function fetchTasks() {
+  //     await fetchAllTasks();
+  //   }
+  //   fetchTasks();
+  // }, [user]);
+
   return (
     <Fragment>
       <div className="px-4 py-6 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 max-w-lvw">
