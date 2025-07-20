@@ -35,7 +35,6 @@ function TasksPage() {
       setShowDialog(false);
       taskFormData.reset();
       setCurrentEditedId(null);
-      console.log(tasksList);
     }
   }
 

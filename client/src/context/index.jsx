@@ -85,6 +85,7 @@ function TaskManagerProvider({ children }) {
     ) {
       async function fetchTasks() {
         await fetchAllTasks();
+        console.log(tasksList);
       }
       fetchTasks();
     }
