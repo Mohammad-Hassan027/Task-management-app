@@ -84,6 +84,7 @@ function TaskManagerProvider({ children }) {
       location.pathname === "/tasks/scrum-board"
     ) {
       fetchAllTasks();
+      console.log(tasksList);
     }
   }, [user, location.pathname]); // Add fetchAllTasks to deps if you memoize it
 
