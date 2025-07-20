@@ -3,9 +3,26 @@ import { scrumBoardOptions } from "./../../config/index";
 import CommonCard from "../../components/common-card";
 import { TaskManagerContext } from "../../context/task-manager-context";
 import { callupdateTask } from "./../../services/tasksApi";
+import { callGetAllTasks } from "../services/tasksApi";
 
 function ScrumBoardPage() {
-  const { tasksList, fetchAllTasks, user } = useContext(TaskManagerContext);
+  const { tasksList, user, setTasksList, setError } =
+    useContext(TaskManagerContext);
+
+  async function fetchAllTasks() {
+    try {
+      if (user !== null) {
+        const response = await callGetAllTasks(user?._id);
+        if (response?.success) {
+          setTasksList(response?.tasksList);
+          setError(null);
+        }
+      }
+    } catch (err) {
+      setError("Failed to fetch tasks");
+      console.error(err);
+    }
+  }
 
   function onDragStart(event, getTaskId) {
     event.dataTransfer.setData("id", getTaskId);
@@ -65,7 +82,7 @@ function ScrumBoardPage() {
   }
 
   useEffect(() => {
-    if (!user) return; // Don't fetch if no user
+    if (!user) return;
     async function fetchTasks() {
       await fetchAllTasks();
     }

@@ -6,6 +6,7 @@ import {
   callAddNewTask,
   callDeleteTask,
   callupdateTask,
+  callGetAllTasks,
 } from "../../services/tasksApi";
 import CommonButton from "../../components/common-button";
 
@@ -16,9 +17,25 @@ function TasksPage() {
     setCurrentEditedId,
     taskFormData,
     tasksList,
-    fetchAllTasks,
+    setTasksList,
+    setError,
   } = useContext(TaskManagerContext);
   const [showDialog, setShowDialog] = useState(false);
+
+  async function fetchAllTasks() {
+    try {
+      if (user !== null) {
+        const response = await callGetAllTasks(user?._id);
+        if (response?.success) {
+          setTasksList(response?.tasksList);
+          setError(null);
+        }
+      }
+    } catch (err) {
+      setError("Failed to fetch tasks");
+      console.error(err);
+    }
+  }
 
   async function handleSubmit(getData) {
     const response =
@@ -53,7 +70,7 @@ function TasksPage() {
   }
 
   useEffect(() => {
-    if (!user) return; // Don't fetch if no user
+    if (!user) return;
     async function fetchTasks() {
       await fetchAllTasks();
     }

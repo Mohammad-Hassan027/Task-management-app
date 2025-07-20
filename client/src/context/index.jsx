@@ -3,7 +3,6 @@ import { callAuthUserApi } from "../services/authApi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TaskManagerContext } from "./task-manager-context";
 import { useForm } from "react-hook-form";
-import { callGetAllTasks } from "../services/tasksApi";
 
 function TaskManagerProvider({ children }) {
   const navigate = useNavigate();
@@ -22,22 +21,6 @@ function TaskManagerProvider({ children }) {
     },
   });
 
-  // In fetchAllTasks
-  async function fetchAllTasks() {
-    try {
-      if (user !== null) {
-        const response = await callGetAllTasks(user?._id);
-        if (response?.success) {
-          setTasksList(response?.tasksList);
-          setError(null);
-        }
-      }
-    } catch (err) {
-      setError("Failed to fetch tasks");
-      console.error(err);
-    }
-  }
-
   useEffect(() => {
     let mounted = true;
 
@@ -49,6 +32,7 @@ function TaskManagerProvider({ children }) {
         if (!mounted) return;
 
         if (data?.success && data?.userInfo) {
+          console.log("User authenticated:", data.userInfo, data.success);
           setUser(data?.userInfo);
           setError(null);
           if (location.pathname === "/auth" || location.pathname === "/") {
@@ -76,21 +60,6 @@ function TaskManagerProvider({ children }) {
     // // Only run on mount and when navigation changes
   }, [navigate, location.pathname]);
 
-  // useEffect(() => {
-  //   if (!user) return; // Don't fetch if no user
-
-  //   if (
-  //     location.pathname === "/tasks/list" ||
-  //     location.pathname === "/tasks/scrum-board"
-  //   ) {
-  //     async function fetchTasks() {
-  //       await fetchAllTasks();
-  //       console.log(tasksList);
-  //     }
-  //     fetchTasks();
-  //   }
-  // }, [user, location.pathname]); // Add fetchAllTasks to deps if you memoize it
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -109,7 +78,6 @@ function TaskManagerProvider({ children }) {
         tasksList,
         setTasksList,
         taskFormData,
-        fetchAllTasks,
         isLoading,
         error,
       }}
