@@ -2,8 +2,7 @@ import { Fragment, useContext, useEffect } from "react";
 import { scrumBoardOptions } from "./../../config/index";
 import CommonCard from "../../components/common-card";
 import { TaskManagerContext } from "../../context/task-manager-context";
-import { callupdateTask } from "./../../services/tasksApi";
-import { callGetAllTasks } from "../services/tasksApi";
+import { callupdateTask, callGetAllTasks } from "./../../services/tasksApi";
 
 function ScrumBoardPage() {
   const { tasksList, user, setTasksList, setError } =
