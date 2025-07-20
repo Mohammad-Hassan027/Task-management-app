@@ -1,11 +1,11 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { scrumBoardOptions } from "./../../config/index";
 import CommonCard from "../../components/common-card";
 import { TaskManagerContext } from "../../context/task-manager-context";
 import { callupdateTask } from "./../../services/tasksApi";
 
 function ScrumBoardPage() {
-  const { tasksList, fetchAllTasks } = useContext(TaskManagerContext);
+  const { tasksList, fetchAllTasks, user } = useContext(TaskManagerContext);
 
   function onDragStart(event, getTaskId) {
     event.dataTransfer.setData("id", getTaskId);
@@ -64,13 +64,13 @@ function ScrumBoardPage() {
     return taskByStatus;
   }
 
-  // useEffect(() => {
-  //   if (!user) return; // Don't fetch if no user
-  //   async function fetchTasks() {
-  //     await fetchAllTasks();
-  //   }
-  //   fetchTasks();
-  // }, [user]);
+  useEffect(() => {
+    if (!user) return; // Don't fetch if no user
+    async function fetchTasks() {
+      await fetchAllTasks();
+    }
+    fetchTasks();
+  }, [user]);
 
   return (
     <Fragment>

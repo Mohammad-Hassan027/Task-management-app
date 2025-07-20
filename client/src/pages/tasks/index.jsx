@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import TaskItems from "../../components/tasks/task-item";
 import AddNewTask from "./../../components/tasks/add-new-task";
 import { TaskManagerContext } from "./../../context/task-manager-context";
@@ -31,7 +31,10 @@ function TasksPage() {
         : await callAddNewTask({ ...getData, userId: user?._id });
 
     if (response?.success) {
-      fetchAllTasks();
+      async function fetchTasks() {
+        await fetchAllTasks();
+      }
+      fetchTasks();
       setShowDialog(false);
       taskFormData.reset();
       setCurrentEditedId(null);
@@ -42,17 +45,20 @@ function TasksPage() {
     const response = await callDeleteTask(getTaskId);
 
     if (response?.success) {
-      fetchAllTasks();
+      async function fetchTasks() {
+        await fetchAllTasks();
+      }
+      fetchTasks();
     }
   }
 
-  // useEffect(() => {
-  //   if (!user) return; // Don't fetch if no user
-  //   async function fetchTasks() {
-  //     await fetchAllTasks();
-  //   }
-  //   fetchTasks();
-  // }, [user]);
+  useEffect(() => {
+    if (!user) return; // Don't fetch if no user
+    async function fetchTasks() {
+      await fetchAllTasks();
+    }
+    fetchTasks();
+  }, [user]);
 
   return (
     <Fragment>

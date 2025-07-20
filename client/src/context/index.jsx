@@ -76,20 +76,20 @@ function TaskManagerProvider({ children }) {
     // // Only run on mount and when navigation changes
   }, [navigate, location.pathname]);
 
-  useEffect(() => {
-    if (!user) return; // Don't fetch if no user
+  // useEffect(() => {
+  //   if (!user) return; // Don't fetch if no user
 
-    if (
-      location.pathname === "/tasks/list" ||
-      location.pathname === "/tasks/scrum-board"
-    ) {
-      async function fetchTasks() {
-        await fetchAllTasks();
-        console.log(tasksList);
-      }
-      fetchTasks();
-    }
-  }, [user, location.pathname]); // Add fetchAllTasks to deps if you memoize it
+  //   if (
+  //     location.pathname === "/tasks/list" ||
+  //     location.pathname === "/tasks/scrum-board"
+  //   ) {
+  //     async function fetchTasks() {
+  //       await fetchAllTasks();
+  //       console.log(tasksList);
+  //     }
+  //     fetchTasks();
+  //   }
+  // }, [user, location.pathname]); // Add fetchAllTasks to deps if you memoize it
 
   if (isLoading) {
     return (
