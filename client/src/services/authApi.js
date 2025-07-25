@@ -45,9 +45,7 @@ export const callAuthUserApi = async () => {
     const apiResponse = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/api/user/auth`,
       {},
-      {
-        withCredentials: true,
-      }
+      { withCredentials: true }
     );
 
     if (apiResponse?.data?.userInfo) {

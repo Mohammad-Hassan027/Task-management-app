@@ -54,7 +54,7 @@ const handleRegister = async (req, res) => {
 
       res.cookie("token", token, {
         withCredentials: true,
-        httpOnly: false,
+        httpOnly: true,
         secure: true,
       });
     }
@@ -110,7 +110,7 @@ const handleLogin = async (req, res) => {
     const token = generateJwtToken(getUser._id);
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
     });
 
@@ -129,7 +129,7 @@ const handleLogin = async (req, res) => {
 const handleLogOut = (req, res) => {
   res.cookie("token", "", {
     withCredentials: true,
-    httpOnly: false,
+    httpOnly: true,
     secure: true,
   });
 
@@ -140,3 +140,18 @@ const handleLogOut = (req, res) => {
 };
 
 module.exports = { handleRegister, handleLogin, handleLogOut };
+
+
+// const token = req.headers["authorization"];
+// if (token) {
+//   jwt.verify(token, "yourSecretKey", (err, decoded) => {
+//     if (err) {
+//       return res.status(401).send("Unauthorized access");
+//     } else {
+//       req.user = decoded;
+//       next();
+//     }
+//   });
+// } else {
+//   return res.status(401).send("Token not provided");
+// }
