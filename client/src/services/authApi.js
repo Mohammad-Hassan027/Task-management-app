@@ -48,14 +48,7 @@ export const callAuthUserApi = async () => {
       { withCredentials: true }
     );
 
-    if (apiResponse?.data?.userInfo) {
-      console.log("User authenticated:", apiResponse?.data?.userInfo);
-      return {
-        success: true,
-        userInfo: apiResponse?.data?.userInfo,
-      };
-    }
-    return { success: false };
+    return apiResponse.data;
   } catch (error) {
     console.error("Auth error:", error);
     return { success: false };

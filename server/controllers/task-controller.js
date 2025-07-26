@@ -9,6 +9,7 @@ const getAllTask = async (req, res) => {
       return res.status(200).json({
         success: true,
         tasksList: getAllTaskById,
+        message: "Tasks fetched successfully",
       });
     } else {
       return res.status(400).json({

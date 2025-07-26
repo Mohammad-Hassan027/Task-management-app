@@ -11,9 +11,9 @@ function ScrumBoardPage() {
   async function fetchAllTasks() {
     try {
       if (user !== null) {
-        const response = await callGetAllTasks(user?._id);
-        if (response?.success) {
-          setTasksList(response?.tasksList);
+        const data = await callGetAllTasks(user?._id);
+        if (data.success) {
+          setTasksList(data.tasksList);
           setError(null);
         }
       }

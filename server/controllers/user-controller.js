@@ -141,7 +141,6 @@ const handleLogOut = (req, res) => {
 
 module.exports = { handleRegister, handleLogin, handleLogOut };
 
-
 // const token = req.headers["authorization"];
 // if (token) {
 //   jwt.verify(token, "yourSecretKey", (err, decoded) => {

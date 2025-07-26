@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
 
 const userAuthVerification = async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
   console.log("Token", token);
 
   if (!token) {
@@ -26,6 +26,7 @@ const userAuthVerification = async (req, res) => {
     return res.status(200).json({
       success: true,
       userInfo: userInfo,
+      message: "User authenticated successfully.",
     });
   } catch (error) {
     console.error("Auth error", error);

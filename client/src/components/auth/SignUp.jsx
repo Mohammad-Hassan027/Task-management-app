@@ -20,13 +20,15 @@ function SignUp() {
   const navigate = useNavigate();
   async function handleSubmit(getData) {
     const data = await callRegisterUserApi(getData);
-    if(data?.success){
+    if (data?.success) {
       // toast({
       //   title:"User register successfully.",
       //   description:"Welcome",
       // });
-      navigate('/tasks/list');
-    } else{
+      navigate("/tasks/list");
+    } else {
+      console.log("Error during registration:", data?.message);
+
       // toast({
       //   title: "Error",
       //   description: "Some error occured",
@@ -43,32 +45,6 @@ function SignUp() {
       />
     </div>
   );
-}
-
-{
-  /* <form>
-  <div className="flex flex-col gap-6">
-    <div className="grid gap-2">
-      <Label htmlFor="name">Name</Label>
-      <Input id="name" type="name" placeholder="Enter your name" required />
-    </div>
-    <div className="grid gap-2">
-      <Label htmlFor="email">Email</Label>
-      <Input id="email" type="email" placeholder="m@example.com" required />
-    </div>
-    <div className="grid gap-2">
-      <div className="flex items-center">
-        <Label htmlFor="password">Password</Label>
-      </div>
-      <Input id="password" type="password" required />
-    </div>
-  </div>
-  <div className="pt-3">
-    <Button type="submit" className="w-full">
-      Register
-    </Button>
-  </div>
-</form>; */
 }
 
 export default SignUp;

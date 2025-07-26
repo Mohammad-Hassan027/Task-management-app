@@ -24,10 +24,16 @@ function TasksPage() {
 
   async function fetchAllTasks() {
     try {
+      console.log("Fetching all task");
       if (user !== null) {
-        const response = await callGetAllTasks(user?._id);
-        if (response?.success) {
-          setTasksList(response?.tasksList);
+        const data = await callGetAllTasks(user?._id);
+        if (data.success) {
+          console.log(
+            "Tasks fetched successfully:",
+            data.tasksList,
+            data.success
+          );
+          setTasksList(data.tasksList);
           setError(null);
         }
       }
@@ -38,7 +44,7 @@ function TasksPage() {
   }
 
   async function handleSubmit(getData) {
-    const response =
+    const data =
       currentEditedId !== null
         ? await callupdateTask({
             ...getData,
@@ -47,7 +53,7 @@ function TasksPage() {
           })
         : await callAddNewTask({ ...getData, userId: user?._id });
 
-    if (response?.success) {
+    if (data?.success) {
       async function fetchTasks() {
         await fetchAllTasks();
       }
@@ -59,9 +65,9 @@ function TasksPage() {
   }
 
   async function handleDeleteTask(getTaskId) {
-    const response = await callDeleteTask(getTaskId);
+    const data = await callDeleteTask(getTaskId);
 
-    if (response?.success) {
+    if (data?.success) {
       async function fetchTasks() {
         await fetchAllTasks();
       }
@@ -70,7 +76,7 @@ function TasksPage() {
   }
 
   useEffect(() => {
-    if (!user) return;
+    if (user === null) return;
     async function fetchTasks() {
       await fetchAllTasks();
     }
