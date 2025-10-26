@@ -14,19 +14,17 @@ function SignIn() {
   });
   const navigate = useNavigate();
   async function handleSubmit(getData) {
-    const data = await callLoginUserApi(getData);
-    if (data?.success) {
-      // toast({
-      //   title: "User register successfully.",
-      //   description: "Welcome",
-      // });
-      navigate("/tasks/list");
-    } else {
-      console.log("Error during login:", data?.message);
-      // toast({
-      //   title: "Error",
-      //   description: "Some error occured",
-      // });
+    try {
+      const data = await callLoginUserApi(getData);
+      if (data?.success) {
+        // toast({
+        //   title: "User register successfully.",
+        //   description: "Welcome",
+        // });
+        navigate("/tasks/list");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   return (

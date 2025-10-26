@@ -22,15 +22,12 @@ function TaskManagerProvider({ children }) {
   });
 
   useEffect(() => {
-    let mounted = true;
-
     async function AuthenticateUser() {
       try {
         setIsLoading(true);
         console.log("authenticating user");
         const data = await callAuthUserApi();
-
-        if (!mounted) return;
+        console.log("Auth data received:", data);
 
         if (data?.success && data?.userInfo !== null) {
           setUser(data.userInfo);
@@ -40,6 +37,13 @@ function TaskManagerProvider({ children }) {
             console.log("Authenticated", location.pathname);
           }
           console.log("User authenticated:", data?.userInfo, data?.success);
+        } else {
+          console.log("User not authenticated, redirecting to auth page");
+          setUser(null);
+          setError(data?.message || "Authentication failed");
+          if (location.pathname !== "/auth") {
+            navigate("/auth");
+          }
         }
       } catch (error) {
         console.log("Auth error:", error);
@@ -48,18 +52,11 @@ function TaskManagerProvider({ children }) {
           navigate("/auth");
         }
       } finally {
-        if (mounted) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     }
 
     AuthenticateUser();
-
-    return () => {
-      mounted = false;
-    };
-    // // Only run on mount and when navigation changes
   }, [navigate, location.pathname]);
 
   if (isLoading) {

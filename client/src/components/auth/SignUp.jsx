@@ -19,20 +19,17 @@ function SignUp() {
   });
   const navigate = useNavigate();
   async function handleSubmit(getData) {
-    const data = await callRegisterUserApi(getData);
-    if (data?.success) {
-      // toast({
-      //   title:"User register successfully.",
-      //   description:"Welcome",
-      // });
-      navigate("/tasks/list");
-    } else {
-      console.log("Error during registration:", data?.message);
-
-      // toast({
-      //   title: "Error",
-      //   description: "Some error occured",
-      // });
+    try {
+      const data = await callRegisterUserApi(getData);
+      if (data?.success) {
+        // toast({
+        //   title:"User register successfully.",
+        //   description:"Welcome",
+        // });
+        navigate("/tasks/list");
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
   return (
