@@ -25,20 +25,15 @@ function TaskManagerProvider({ children }) {
     async function AuthenticateUser() {
       try {
         setIsLoading(true);
-        console.log("authenticating user");
         const data = await callAuthUserApi();
-        console.log("Auth data received:", data);
 
         if (data?.success && data?.userInfo !== null) {
           setUser(data.userInfo);
           setError(null);
           if (location.pathname === "/auth" || location.pathname === "/") {
             navigate("/tasks/list");
-            console.log("Authenticated", location.pathname);
           }
-          console.log("User authenticated:", data?.userInfo, data?.success);
         } else {
-          console.log("User not authenticated, redirecting to auth page");
           setUser(null);
           setError(data?.message || "Authentication failed");
           if (location.pathname !== "/auth") {

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Header() {
   const { user, setUser } = useContext(TaskManagerContext);
   const navigate = useNavigate();
+
   async function handleLogout() {
     const apiResponse = await callLogoutUserApi();
 
@@ -15,35 +16,54 @@ function Header() {
       navigate("/auth");
     }
   }
+
+  const PRIMARY_COLOR = "text-blue-600";
+  const HOVER_COLOR = "hover:text-blue-800";
+  const ACCENT_COLOR_BG = "bg-blue-50";
+
   return (
-    <header className="border-b border-gray-200 w-screen">
-      <div className="h-[64px] w-full flex justify-between items-center">
-        <div className="flex justify-between items-center">
-          <div className="px-5 w-2xl">
-            <h1 className="text-green-600 scroll-m-20 text-center text-2xl sm:text-3xl font-extrabold tracking-tight text-balance  text-ellipsis overflow-hidden whitespace-nowrap">
-              Task Manager
+    <header className="border-b border-gray-100 bg-white shadow-sm w-screen sticky top-0 z-10">
+      <div className="h-[72px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="flex items-center space-x-8">
+          <div className="flex-shrink-0">
+            <h1
+              className={`scroll-m-20 text-3xl font-extrabold tracking-tight ${PRIMARY_COLOR}`}
+            >
+              TaskMaster 🚀
             </h1>
           </div>
-          <div className="pt-2.5 flex gap-6 w-[200px] sm:w-[300px]">
-            <Link className="text-black font-bold text-xl" to={"/tasks/list"}>
+
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link
+              className={`font-medium text-lg text-gray-700 transition duration-150 ease-in-out ${HOVER_COLOR}`}
+              to={"/tasks/list"}
+            >
               Tasks
             </Link>
             <Link
-              className="text-black font-bold text-xl"
+              className={`font-medium text-lg text-gray-700 transition duration-150 ease-in-out ${HOVER_COLOR}`}
               to={"/tasks/scrum-board"}
             >
-              Scrum board
+              Scrum Board
             </Link>
-          </div>
+          </nav>
         </div>
-        <div className="pr-6 flex justify-between items-center gap-6 w-auto">
-          <div className="bg-amber-300 p-2 rounded-2xl">
-            <p className="font-semibold text-xl">{user?.name}</p>
-          </div>
+
+        <div className="flex items-center space-x-4">
+          {user?.name && (
+            <div
+              className={`py-1 px-3 rounded-full ${ACCENT_COLOR_BG} text-blue-700 font-semibold text-sm`}
+            >
+              {user.name}
+            </div>
+          )}
+
           <LogOut
             onClick={handleLogout}
-            color="#000"
-            className="cursor-pointer"
+            color="#4B5563"
+            size={24}
+            className={`cursor-pointer transition duration-150 ease-in-out ${HOVER_COLOR}`}
+            title="Logout"
           />
         </div>
       </div>

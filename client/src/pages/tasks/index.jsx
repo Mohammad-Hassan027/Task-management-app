@@ -85,16 +85,27 @@ function TasksPage() {
 
   return (
     <Fragment>
-      <div className="px-4 py-6 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 max-w-lvw">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Your Tasks</h2>
+      <div
+        className="px-4 py-8 min-h-screen bg-gray-50 max-w-lvw lg:px-8 xl:px-16"
+      >
+        <div className="flex justify-between items-center mb-8">
+          <h2
+            className="text-3xl font-extrabold text-gray-900"
+          >
+            My Task Board
+          </h2>
+
           <CommonButton
             btnText={"Add New Task"}
+            className="bg-indigo-600 text-white hover:bg-indigo-700 py-2.5 px-6 rounded-lg font-semibold shadow-md transition-colors duration-200"
             onClick={() => setShowDialog(true)}
           />
         </div>
-        <div className="w-full p-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
+        <div className="w-full">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5"
+          >
             {tasksList.length > 0 ? (
               tasksList.map((taskItem) => (
                 <TaskItems
@@ -107,16 +118,37 @@ function TasksPage() {
                 />
               ))
             ) : (
-              <div className="col-span-full flex flex-col items-center justify-center py-16">
-                <h1 className="text-xl font-semibold text-gray-500 mb-2">
-                  No tasks added!
+              <div
+                className="col-span-full flex flex-col items-center justify-center py-20 bg-white rounded-lg border border-dashed border-gray-300 shadow-inner"
+              >
+                <svg
+                  className="w-12 h-12 text-gray-400 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                  ></path>
+                </svg>
+
+                <h1 className="text-xl font-semibold text-gray-700 mb-2">
+                  No tasks yet!
                 </h1>
-                <p className="text-gray-400">Please add one.</p>
+
+                <p className="text-gray-500">
+                  Click "Add New Task" to get started.
+                </p>
               </div>
             )}
           </div>
         </div>
       </div>
+
       <AddNewTask
         showDialog={showDialog}
         setShowDialog={setShowDialog}

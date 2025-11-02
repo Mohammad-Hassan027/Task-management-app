@@ -21,7 +21,7 @@ export const callLoginUserApi = async (formData) => {
     return apiResponse?.data;
   } catch (error) {
     console.error("Error during login:", error);
-    throw error; // Re-throw the error to handle it in the calling function
+    throw error;
   }
 };
 
@@ -36,7 +36,7 @@ export const callLogoutUserApi = async () => {
     return apiResponse?.data;
   } catch (error) {
     console.error("Error during logout:", error);
-    throw error; // Re-throw the error to handle it in the calling function
+    throw error;
   }
 };
 

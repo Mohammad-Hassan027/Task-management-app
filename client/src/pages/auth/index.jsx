@@ -1,7 +1,6 @@
 import { Button } from "../../components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -11,32 +10,36 @@ import {
 import { useState } from "react";
 import SignIn from "../../components/auth/SignIn";
 import SignUp from "../../components/auth/SignUp";
-// import CommonButton from "../../components/common-button";
 
 function AuthPage() {
   const [isLoginVeiw, setIsLoginVeiw] = useState(true);
+
+  const titleText = isLoginVeiw
+    ? "Login to your account"
+    : "Create a new account";
+  const descriptionText = isLoginVeiw
+    ? "Enter your email and password to log in."
+    : "Enter your details to sign up.";
+
   return (
-    <div className="flex justify-center pt-8 dark">
-      <Card className="w-full max-w-sm">
+    <div className="flex justify-center pt-8 bg-gray-50">
+      <Card className="w-full max-w-sm bg-white border border-gray-200 shadow-lg">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
+          <CardTitle className="text-gray-900">{titleText}</CardTitle>
+          <CardDescription className="text-gray-600">
+            {descriptionText}
           </CardDescription>
-          {/* <CardAction>
-            <Button variant="outline">Sign Up</Button>
-          </CardAction> */}
         </CardHeader>
         <CardContent>{isLoginVeiw ? <SignIn /> : <SignUp />}</CardContent>
         <CardFooter className="flex-col gap-2">
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300"
             onClick={() => {
               setIsLoginVeiw(!isLoginVeiw);
             }}
           >
-            {isLoginVeiw ? "Switch to sign Up" : "Switch to sign In"}
+            {isLoginVeiw ? "Switch to Sign Up" : "Switch to Sign In"}
           </Button>
         </CardFooter>
       </Card>
@@ -45,17 +48,3 @@ function AuthPage() {
 }
 
 export default AuthPage;
-
-// <div className="flex justify-center items-center">
-//   <div className="rounded-2xl shadow-2xl">
-//     <h1>Welcome to Tasks management app</h1>
-//     <div className="mt-4">{isLoginVeiw ? <SignIn /> : <SignUp />}</div>
-//     <div>
-//       <CommonButton
-//         btnText={isLoginVeiw ? "Switch to sign Up" : "Switch to sign In"}
-//         onClick={()=>{setIsLoginVeiw(!isLoginVeiw)}}
-//         type={"button"}
-//       />
-//     </div>
-//   </div>
-// </div>
