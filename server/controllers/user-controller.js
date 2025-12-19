@@ -53,9 +53,9 @@ const handleRegister = async (req, res) => {
       const token = generateJwtToken(newlyCreatedUser._id);
 
       res.cookie("token", token, {
-        withCredentials: true,
         httpOnly: true,
         secure: true,
+        sameSite: "None",
       });
     }
 
@@ -109,9 +109,9 @@ const handleLogin = async (req, res) => {
 
     const token = generateJwtToken(getUser._id);
     res.cookie("token", token, {
-      withCredentials: true,
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     });
 
     return res.status(200).json({
@@ -128,9 +128,10 @@ const handleLogin = async (req, res) => {
 
 const handleLogOut = (req, res) => {
   res.cookie("token", "", {
-    withCredentials: true,
     httpOnly: true,
     secure: true,
+    sameSite: "None",
+    expires: new Date(0),
   });
 
   return res.status(200).json({
